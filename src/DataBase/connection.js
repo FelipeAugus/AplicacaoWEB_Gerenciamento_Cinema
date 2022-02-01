@@ -10,7 +10,6 @@ const defaultQueryHandler = (res) => {
       if (results) {
           console.log(results);
           res.status(200).json(results);
-          return
       }
   };
 };

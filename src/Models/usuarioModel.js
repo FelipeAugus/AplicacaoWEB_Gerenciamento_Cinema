@@ -5,7 +5,7 @@ const Usuario = sequelize.define('usuario', {
     Nome: { type: sequelize.Sequelize.TEXT },
     Endereco: { type: sequelize.Sequelize.TEXT },
 }, {
-    tableName: 'usuario',
+    tableName: 'usuarios',
     timestamps: false,
     createdAt: false,
     updatedAt: false,
