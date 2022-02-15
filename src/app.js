@@ -1,4 +1,4 @@
-const { sessaoController } = require("./Controllers/sessaoController");
+const { filmeController } = require("./Controllers/filmeController");
 const { usuarioController } = require("./Controllers/usuarioController");
 
 const express = require('express');
@@ -9,13 +9,13 @@ app.use(express.static(path));
 app.set('view engine', 'html');
 
 
-const pathHtml = __dirname + '/views'
+const pathHtml = path + '/htmls'
 app.get('/', async (req, res) => {
-    res.sendFile(pathHtml+'/index.html');
+    res.sendFile(pathHtml+'/cadastrarFilme.html');
 })
 
-app.get('/abc', async (req, res) => {
-  usuarioController.select(req, res);
+app.get('/filmes', async (req, res) => {
+  filmeController.select(req, res);
 })
 
 module.exports = { app }
