@@ -8,15 +8,15 @@ const select = (req, res, entity, includeQuery) => {
 
 const updateById = (req, res, entity, includeQuery, primary_key) => {
     var where = {};
-    where [primary_key] = req.params.id
-    entity.update(req.body, { where: { id_arquivo: where }, returning: true, include: includeQuery })
+    where [primary_key] = req.body.id
+    entity.update(req.body, { where: where, returning: true, include: includeQuery })
     .then(pool.defaultQueryHandler(res))
     .catch(pool.exceptionQueryHandler(res));
 };
 
 const deleteById = (req, res, entity, includeQuery, primary_key) => {
     var where = {};
-    where [primary_key] = req.params.id;
+    where [primary_key] = req.body.id;
     entity.destroy({ where: where})
     .then(pool.defaultQueryHandler(res))
     .catch(pool.exceptionQueryHandler(res));
