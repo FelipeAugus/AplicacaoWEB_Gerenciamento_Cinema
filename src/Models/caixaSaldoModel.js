@@ -1,4 +1,4 @@
-const sequelize = require("../DataBase/connection").sequelize;
+const sequelize = require("../connect/connection").sequelize;
 
 const CaixaSaldo = sequelize.define('caixas_saldo', {
     id_caixa_saldo: { type: sequelize.Sequelize.INTEGER, primaryKey: true },

@@ -1,4 +1,4 @@
-genericRoutes = require("../DataBase/genericRoutes")
+genericRoutes = require("./genericRoutes")
 
 class Controller {
     constructor(entity, includeQuery, primary_key) {

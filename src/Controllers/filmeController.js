@@ -1,4 +1,4 @@
-const { Controller } = require("./genericController")
+const { Controller } = require("../connect/connection")
 const express = require("express");
 const router = express.Router();
 
@@ -12,7 +12,6 @@ class FilmeController extends Controller{
 
 const filmeController = new FilmeController();
 
-// Gambiarra. Não recomendo.
 router.post('/filmes', (req, res) => {
     const rota = req.body.rota;
     

@@ -1,4 +1,4 @@
-const sequelize = require("../DataBase/connection").sequelize;
+const sequelize = require("../connect/connection").sequelize;
 
 const Filme = sequelize.define('filmes', {
     id_filme: { type: sequelize.Sequelize.INTEGER, primaryKey: true },

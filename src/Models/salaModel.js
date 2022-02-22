@@ -1,4 +1,4 @@
-const sequelize = require("../DataBase/connection").sequelize;
+const sequelize = require("../connect/connection").sequelize;
 
 const Sala = sequelize.define('salas', {
     id_sala: { type: sequelize.Sequelize.INTEGER, primaryKey: true },

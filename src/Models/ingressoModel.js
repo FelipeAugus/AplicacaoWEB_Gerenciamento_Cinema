@@ -1,11 +1,11 @@
-const sequelize = require("../DataBase/connection").sequelize;
+const sequelize = require("../connect/connection").sequelize;
 
 const Ingresso = sequelize.define('ingressos', {
     id_ingresso: { type: sequelize.Sequelize.INTEGER, primaryKey: true },
     id_sessao: { type: sequelize.Sequelize.INTEGER },
     id_produto: { type: sequelize.Sequelize.INTEGER }
 }, {
-    tableName: 'ingressos',
+    tableName: 'ingresso',
     timestamps: false,
     createdAt: false,
     updatedAt: false,
