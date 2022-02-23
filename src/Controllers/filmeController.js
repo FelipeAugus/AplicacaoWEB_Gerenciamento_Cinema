@@ -1,8 +1,8 @@
-const { Controller } = require("../connect/connection")
+const { Controller } = require("../connect/genericController")
 const express = require("express");
 const router = express.Router();
 
-filme = require("../Models/filmeModel")
+const filme = require("../Models/filmeModel")
 
 class FilmeController extends Controller{
     constructor(){

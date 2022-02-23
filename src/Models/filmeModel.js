@@ -2,7 +2,7 @@ const sequelize = require("../connect/connection").sequelize;
 
 const Filme = sequelize.define('filmes', {
     id_filme: { type: sequelize.Sequelize.INTEGER, primaryKey: true },
-    nome: { type: sequelize.Sequelize.TEXT },
+    nome: { type: sequelize.Sequelize.TEXT, primaryKey: true },
     tempo_minutos_filme: { type: sequelize.Sequelize.INTEGER },
     imagem_filme: { type: sequelize.Sequelize.TEXT },
 }, {

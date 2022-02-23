@@ -8,61 +8,24 @@
     <link rel="shortcut icon" href="assets/images/logo.png" type="image/x-icon">
     <meta name="description" content="">
 
-
     <title>Filme</title>
+
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
     <link rel="stylesheet" href="assets/dropdown/css/style.css">
     <link rel="stylesheet" href="assets/socicon/css/styles.css">
     <link rel="stylesheet" href="assets/theme/css/style.css">
-    <link rel="preload"
-        href="https://fonts.googleapis.com/css?family=Jost:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap"
-        as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Jost:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Jost:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap">
+        <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Jost:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap">
     </noscript>
     <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css">
     <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
-
-
-
-
+    <script src="./scripts/scripts.js"></script>
 </head>
 
-<body>
-
-    <section data-bs-version="5.1" class="form5 cid-sXsEXkcVnS" id="form5-1c">
-
-
-        <div class="container">
-            <div class="mbr-section-head">
-                <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">Cadastro de Filmes</h3>
-            </div>
-            <div class="row justify-content-center mt-4">
-                <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
-                    <form action="" method="POST" class="mbr-form form-with-styler"
-                        data-form-title="Form Name">
-                        <div class="dragArea row">
-                            <div class="col-md col-sm-12 form-group mb-3" data-for="hora">
-                                <input type="text" name="nome" placeholder="Nome" 
-                                    class="form-control" value="" id="nome">
-                            </div>
-
-                            <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="email">
-                                <input type="number" min="1" name="duracao" placeholder="Duração (min)" class="form-control"
-                                value="" id="duracao">
-                            </div>
-
-                            <div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn"><button
-                                    type="submit" class="btn btn-primary display-7">Cadastrar</button></div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+<body onload="carregaFilmes()">
 
     <section data-bs-version="5.1" class="menu menu1 cid-sXsNsjFosU" once="menu" id="menu1-1f">
         <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
@@ -101,6 +64,49 @@
         </nav>
     </section>
 
+    <section data-bs-version="5.1" class="form5 cid-sXsEXkcVnS" id="form5-1c">
+        <div class="container">
+            <div class="mbr-section-head">
+                <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">Cadastro de Filmes</h3>
+            </div>
+            <div class="row justify-content-center mt-4">
+                <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
+                    <form onsubmit="cadastraFilme(event)" class="mbr-form form-with-styler" data-form-title="Form Name">
+                        <div class="dragArea row">
+                            <div class="col-md col-sm-12 form-group mb-3" data-for="hora">
+                                <input type="text" name="nome" placeholder="Nome" class="form-control" id="nome">
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
+                                <input type="number" min="1" name="duracao" placeholder="Duração (min)" class="form-control" id="duracao">
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn">
+                                <button type="submit" class="btn btn-primary display-7">Cadastrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>   
+    <script>
+ 
+    </script>
+    <section>
+        <h3>Filmes cadastrados</h3>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Duração</th>
+                <!-- <th scope="col">Remover</th> -->
+              </tr>
+            </thead>
+            <tbody id="corpo-tabela">
+            </tbody>
+          </table>
+    </section>
 </body>
 
 </html>

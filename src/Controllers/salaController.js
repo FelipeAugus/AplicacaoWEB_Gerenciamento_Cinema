@@ -1,8 +1,8 @@
-const { Controller } = require("../connect/connection")
+const { Controller } = require("../connect/genericController")
 const express = require("express");
 const router = express.Router();
 
-sessao = require("../Models/salaModel")
+const salas = require("../Models/salaModel")
 
 class SalaController extends Controller{
     constructor(){

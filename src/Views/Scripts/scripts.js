@@ -1,11 +1,12 @@
 
-function carregaFilmes() {
-    // Não recomendo fazer desta forma. É gambiarra. 
-    makeRequest({url: 'filmes', params: {'rota': 'UPDATE', id: 1, nome: "FilmeTeste01", imagem_filme: "n"}})
 
+
+
+
+function carregaFilmes() {
     const filmes = makeRequest({url: 'filmes', params: {'rota': 'SELECT'}})
 
-    const table = document.getElementById('tabela');
+    const table = document.getElementById('corpo-tabela');
     let clock = true;
     filmes.forEach(filme => {
         console.log(filme);
@@ -16,16 +17,72 @@ function carregaFilmes() {
             linha.className = 'dif';
         }
 
-        const colunaImg = linha.insertCell();
-        colunaImg.appendChild(document.createTextNode(filme.imagem_filme))
+        // const colunaImg = linha.insertCell();
+        // colunaImg.appendChild(document.createTextNode(filme.imagem_filme))
 
         const colunaNome = linha.insertCell();
         colunaNome.appendChild(document.createTextNode(filme.nome))
 
         const colunaDuracao = linha.insertCell();
         colunaDuracao.appendChild(document.createTextNode(filme.tempo_minutos_filme))
+
+        // const colunaBtn = linha.insertCell();
+        // colunaBtn.innerHTML = `<button class="btn btn-danger" onclick="removeFilme(${filme.id_filme})">DEL</button>`;
     });
 }
+
+// function removeFilme(id_filme) {
+//     const ret = makeRequest({url: 'filmes', params: {'rota': 'DELETE', 
+//                             id: id_filme}})    
+//     console.log(ret);
+// }
+
+() => {
+    var form = document.querySelector('form');
+    form.addEventListener('submit', function( event ) {
+        event.preventDefault();
+    });
+}
+function realizaVenda() {
+    document.querySelector('form').addEventListener('submit', event => {
+        event.preventDefault();
+
+    })
+}
+
+function cadastraSessao() {
+    document.querySelector('form').addEventListener('submit', event => {
+        event.preventDefault();
+
+    })
+}
+
+function cadastraFilme(event) {
+        event.preventDefault();
+        const nome = document.querySelector("#nome").value;
+        const duracao = document.querySelector("#duracao").value;
+        if(!nome || !duracao){
+            alert("Preencha todos campos");
+            return
+        }
+        const ret = makeRequest({url: 'filmes', params: {'rota': 'INSERT', 
+                                nome: nome, tempo_minutos_filme: duracao}})    
+
+        if(ret[1]){
+            alert(`Inserido com sucesso || nome:${nome} || duracao: ${duracao}||`)
+        }
+            
+        document.location.reload(true);
+        
+}
+
+function atualizaEstoque() {
+    document.querySelector('form').addEventListener('submit', event => {
+        event.preventDefault();
+
+    })
+}
+
 
 function makeRequest(req) {
     const url = req.url;
