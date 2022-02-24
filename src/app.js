@@ -9,7 +9,7 @@ app.set('view engine', 'html');
 // usar JSON nas req
 app.use(express.json());
 
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile('/index.html');
 });
 

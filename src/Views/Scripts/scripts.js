@@ -1,8 +1,3 @@
-
-
-
-
-
 function carregaFilmes() {
     const filmes = makeRequest({url: 'filmes', params: {'rota': 'SELECT'}})
 
@@ -31,18 +26,29 @@ function carregaFilmes() {
     });
 }
 
-// function removeFilme(id_filme) {
-//     const ret = makeRequest({url: 'filmes', params: {'rota': 'DELETE', 
-//                             id: id_filme}})    
-//     console.log(ret);
-// }
+function setaFormSessao() {
+    const filmes = makeRequest({url: 'filmes', params: {'rota': 'SELECT'}})
+    const filmesSelect = document.getElementById('filmes');
+    filmes.forEach(filme => {
+        const option = document.createElement('option');
+        option.value = filme.id_filme;
+        option.text = filme.nome;
 
-() => {
-    var form = document.querySelector('form');
-    form.addEventListener('submit', function( event ) {
-        event.preventDefault();
+        filmesSelect.add(option);
+    });
+    
+    
+    const salas = makeRequest({url: 'salas', params: {'rota': 'SELECT'}})
+    const salasSelect = document.getElementById('salas');
+    salas.forEach(sala => {
+        const option = document.createElement('option');
+        option.value = sala.id_sala;
+        option.text = sala.numero_sala;
+
+        salasSelect.add(option);
     });
 }
+
 function realizaVenda() {
     document.querySelector('form').addEventListener('submit', event => {
         event.preventDefault();
@@ -50,11 +56,29 @@ function realizaVenda() {
     })
 }
 
-function cadastraSessao() {
-    document.querySelector('form').addEventListener('submit', event => {
-        event.preventDefault();
+function cadastraSessao(event) {
+    event.preventDefault();
+    const horario = document.querySelector("#hora").value;
+    const filme = document.querySelector("#filmes").value;
+    const sala = document.querySelector("#salas").value;
+    
+    if(!horario || filme=='0' || sala=='0'){
+        alert("Preencha todos campos");
+        return
+    }
 
-    })
+    // ToDo Verificar data menor que a atual do sistema
+    console.log(`${horario}  ${filme}  ${sala}`)
+    const ret = makeRequest({url: 'criaSessao', params: {
+        idSala: sala,
+        idFilme: filme,
+        dthrInicio: horario.replace("T", " "),
+    }})
+    console.log(ret);
+    if(ret[0] = 'SUCESSO'){
+        console.log(ret)
+        alert(`Inserido com sucesso || idSala:${sala} || idFilme: ${filme}|| dthrInicio: ${horario}`)
+    }
 }
 
 function cadastraFilme(event) {
@@ -69,11 +93,14 @@ function cadastraFilme(event) {
                                 nome: nome, tempo_minutos_filme: duracao}})    
 
         if(ret[1]){
+            console.log(ret)
             alert(`Inserido com sucesso || nome:${nome} || duracao: ${duracao}||`)
+        } else {
+            console.log(ret)
+            alert(`Filme atualizado no banco || nome:${nome} || duracao: ${duracao}||`)
         }
             
         document.location.reload(true);
-        
 }
 
 function atualizaEstoque() {
@@ -116,3 +143,11 @@ function makeRequest(req) {
         alert('Ocorreu um problema com a requisição, STATUS REQUISIÇÃO '+String.toString(httpRequest.status)); 
     }
 }
+
+
+
+// function removeFilme(id_filme) {
+//     const ret = makeRequest({url: 'filmes', params: {'rota': 'DELETE', 
+//                             id: id_filme}})    
+//     console.log(ret);
+// }

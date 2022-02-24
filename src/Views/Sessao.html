@@ -25,46 +25,10 @@
     </noscript>
     <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css">
     <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
-
-
-
-
+    <script src="./scripts/scripts.js"></script>
 </head>
 
-<body>
-
-    <section data-bs-version="5.1" class="form5 cid-sXsEXkcVnS" id="form5-1c">
-
-
-        <div class="container">
-            <div class="mbr-section-head">
-                <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">Cadastro de Sessão</h3>
-
-            </div>
-            <div class="row justify-content-center mt-4">
-                <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
-                    <form action="" method="POST" class="mbr-form form-with-styler"
-                        data-form-title="Form Name">
-                        <div class="dragArea row">
-                            <div class="col-md col-sm-12 form-group mb-3" data-for="hora">
-                                <input type="datetime-local" name="hora" placeholder="Hora" data-form-field="hora"
-                                    class="form-control" value="" id="hora">
-                            </div>
-
-                            <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="email">
-                                <select class="form-control" id="filmes">
-                                    <option selected>Clique p/ selecionar o filme</option>
-                                </select>
-                            </div>
-
-                            <div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn"><button
-                                    type="submit" class="btn btn-primary display-7">Cadastrar</button></div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+<body onload="setaFormSessao()">
 
     <section data-bs-version="5.1" class="menu menu1 cid-sXsNsjFosU" once="menu" id="menu1-1f">
 
@@ -104,7 +68,45 @@
             </div>
         </nav>
     </section>
+    <section data-bs-version="5.1" class="form5 cid-sXsEXkcVnS" id="form5-1c">
+        <div class="container">
+            <div class="mbr-section-head">
+                <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">Cadastro de Sessão</h3>
+            </div>
+            <div class="row justify-content-center mt-4">
+                <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
+                    <form onsubmit="cadastraSessao(event)" class="mbr-form form-with-styler"
+                        data-form-title="Form Name">
+                        <div class="dragArea row">
+                            <div class="col-md col-sm-12 form-group mb-3" data-for="hora">
+                                <input type="datetime-local" name="hora" placeholder="Hora" data-form-field="hora" class="form-control" value="" id="hora">
+                            </div>
 
+                            <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="email">
+                                <select class="form-control" id="filmes">
+                                    <option selected value="0">Clique p/ selecionar o filme</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="email">
+                                <select class="form-control" id="salas">
+                                    <option selected value="0">Clique p/ selecionar a sala</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn">
+                                <button type="submit" class="btn btn-primary display-7">Cadastrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h1>TODO: RELATORIO DAS SESSOES EXISTENTES, PODENDO DELETAR, ONCASCADE NO BANCO</h1>
+    </section>
 </body>
 
 </html>
