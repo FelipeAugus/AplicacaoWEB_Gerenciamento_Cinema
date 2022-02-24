@@ -21,6 +21,12 @@ router.post("/criaSessao", (req, res) => {
     .catch(pool.exceptionQueryHandler(res));
 });
 
+router.post("/viewSessao", (req, res) => { 
+    pool.sequelize.query('SELECT * FROM trabalho_optativa2.sessoes_salas;')
+    .then(pool.defaultQueryHandler(res))
+    .catch(pool.exceptionQueryHandler(res));
+});
+
 router.post('/sessao', (req, res) => {
     const rota = req.body.rota;
     

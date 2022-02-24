@@ -1,11 +1,12 @@
 const sequelize = require("../connect/connection").sequelize;
 
 const Sessao = sequelize.define('sessao', {
-    idSessao: { type: sequelize.Sequelize.INTEGER, primaryKey: true },
-    idFilme: { type: sequelize.Sequelize.INTEGER },
-    idSala: { type: sequelize.Sequelize.INTEGER },
-    Hora_Inicio: { type: sequelize.Sequelize.DATE },
-    Hora_FIm: { type: sequelize.Sequelize.DATE }
+    id_sessao: { type: sequelize.Sequelize.INTEGER, primaryKey: true },
+    id_filme: { type: sequelize.Sequelize.INTEGER },
+    dthr_inicio_sessao: { type: sequelize.Sequelize.DATE },
+    dthr_fim_sessao: { type: sequelize.Sequelize.DATE },
+    id_sala: { type: sequelize.Sequelize.INTEGER },
+    dthr_criacao: { type: sequelize.Sequelize.DATE }
 }, {
     tableName: 'sessao',
     timestamps: false,
@@ -18,7 +19,7 @@ const Sessao = sequelize.define('sessao', {
 
 const include = [];
 
-const primary_key = "idSessao";
+const primary_key = "id_sessao";
 
 module.exports = {
     Sessao,

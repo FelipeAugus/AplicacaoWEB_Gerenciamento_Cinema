@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,10 +28,7 @@
 </head>
 
 <body onload="setaFormSessao()">
-
     <section data-bs-version="5.1" class="menu menu1 cid-sXsNsjFosU" once="menu" id="menu1-1f">
-
-
         <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
             <div class="container">
                 <div class="navbar-brand">
@@ -61,13 +57,14 @@
                                 href="Filme.html">Cad. Filmes</a>
                         </li>
                         <li class="nav-item"><a class="nav-link link text-black text-primary display-4"
-                                href="Editar.html">Estoque</a>
+                                href="Ingressos.html">Venda de Ingressos</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </section>
+
     <section data-bs-version="5.1" class="form5 cid-sXsEXkcVnS" id="form5-1c">
         <div class="container">
             <div class="mbr-section-head">
@@ -104,9 +101,19 @@
         </div>
     </section>
 
-    <section>
-        <h1>TODO: RELATORIO DAS SESSOES EXISTENTES, PODENDO DELETAR, ONCASCADE NO BANCO</h1>
+    <section class="container">
+        <h3>Sessoes por sala</h3>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Sala</th>
+                <th scope="col">Filme</th>
+                <th scope="col">Fim da última sessão</th>
+              </tr>
+            </thead>
+            <tbody id="corpo-tabela">
+            </tbody>
+          </table>
     </section>
 </body>
-
 </html>
