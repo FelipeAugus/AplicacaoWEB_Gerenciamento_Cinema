@@ -1,3 +1,4 @@
+const pool= require("../connect/connection");
 const { Controller } = require("../connect/genericController")
 const express = require("express");
 const router = express.Router();
@@ -11,6 +12,12 @@ class IngressosController extends Controller{
 }
 
 const ingressosController = new IngressosController();
+
+router.post('/viewIngressos', (req, res) => {
+    pool.sequelize.query('SELECT * FROM trabalho_optativa2.ingressos_disponiveis;')
+    .then(pool.defaultQueryHandler(res))
+    .catch(pool.exceptionQueryHandler(res));
+});
 
 router.post('/ingressos', (req, res) => {
     const rota = req.body.rota;

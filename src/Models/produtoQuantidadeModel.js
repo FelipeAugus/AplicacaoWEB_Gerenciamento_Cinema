@@ -2,7 +2,7 @@ const sequelize = require("../connect/connection").sequelize;
 
 const ProdutoQuantidade = sequelize.define('produtos_quantidade', {
     id_produto_quantidade: { type: sequelize.Sequelize.INTEGER, primaryKey: true },
-    id_produto: { type: sequelize.Sequelize.INTEGER },
+    id_produto: { type: sequelize.Sequelize.INTEGER, primaryKey: true },
     quantidade: { type: sequelize.Sequelize.INTEGER },
     dthr_atualizacao: { type: sequelize.Sequelize.DATE }
 }, {
@@ -17,7 +17,7 @@ const ProdutoQuantidade = sequelize.define('produtos_quantidade', {
 
 const include = [];
 
-const primary_key = "id_produto_quantidade";
+const primary_key = "id_produto";
 
 module.exports = {
     ProdutoQuantidade,

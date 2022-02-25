@@ -122,30 +122,50 @@ function cadastraSessao(event) {
     }
 }
 
+const mapQuantIngressos = new Map()
 // INGRESSOS
-function setaFormSessao() {
-    const filmes = makeRequest({url: 'filmes', params: {'rota': 'SELECT'}})
-    const filmesSelect = document.getElementById('filmes');
-    filmes.forEach(filme => {
+function setaFormIngresso() {
+    const ingressos = makeRequest({url: 'viewIngressos', params: {}})[0]
+    const ingressosSelect = document.getElementById('ingressos');
+    ingressos.forEach(ingresso => {
         const option = document.createElement('option');
-        option.value = filme.id_filme;
-        option.text = filme.nome;
+        option.value = ingresso.id_produto;
+        
+        const nome = ingresso.nome_produto;
+        option.text = nome.substr(9);
 
-        filmesSelect.add(option);
-    });
-    
-    
-    const salas = makeRequest({url: 'salas', params: {'rota': 'SELECT'}})
-    const salasSelect = document.getElementById('salas');
-    salas.forEach(sala => {
-        const option = document.createElement('option');
-        option.value = sala.id_sala;
-        option.text = sala.numero_sala;
+        ingressosSelect.add(option);
 
-        salasSelect.add(option);
+        mapQuantIngressos.set(ingresso.id_produto, ingresso.quantidade);
     });
-    carregaSessoes();
 }
+
+function venderIngresso(event) {
+    event.preventDefault();
+    const ingressoIdProduto = document.querySelector("#ingressos").value;
+
+    if(ingressoIdProduto=='0'){
+        alert("Selecione um ingresso");
+        return
+    }
+    const quant = mapQuantIngressos.get(Number(ingressoIdProduto));
+
+    console.log(`${ingressoIdProduto} ${quant-1}`)
+
+    const ret = makeRequest({url: 'produtos_quantidade', params: {
+        'rota': 'UPDATE',
+        id: ingressoIdProduto,
+        quantidade: quant-1
+    }})
+    
+    console.log(ret);
+    if(ret[0] = 'SUCESSO'){
+        alert(`Venda realizada com sucesso || Ingressos restantes: ${quant-1}`)
+        document.location.reload(true);
+    }
+}
+
+
 
 // Vendas
 function realizaVenda() {
@@ -180,7 +200,6 @@ function makeRequest(req) {
     
     httpRequest.setRequestHeader('Content-Type', 'application/json');
     try {
-        console.log(params, typeof(params), JSON.stringify(params), typeof(JSON.stringify(params)))
         httpRequest.send(JSON.stringify(params));
         if (httpRequest.readyState === 4) {
             if (httpRequest.status === 200) {
