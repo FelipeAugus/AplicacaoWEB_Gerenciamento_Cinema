@@ -44,8 +44,6 @@ function cadastraFilme(event) {
         document.location.reload(true);
 }
 
-
-
 // SESSAO 
 function setaFormSessao() {
     const filmes = makeRequest({url: 'filmes', params: {'rota': 'SELECT'}})
@@ -122,9 +120,10 @@ function cadastraSessao(event) {
     }
 }
 
-const mapQuantIngressos = new Map()
 // INGRESSOS
+let mapQuantIngressos;
 function setaFormIngresso() {
+    mapQuantIngressos = new Map();
     const ingressos = makeRequest({url: 'viewIngressos', params: {}})[0]
     const ingressosSelect = document.getElementById('ingressos');
     ingressos.forEach(ingresso => {
@@ -157,7 +156,7 @@ function venderIngresso(event) {
         id: ingressoIdProduto,
         quantidade: quant-1
     }})
-    
+
     console.log(ret);
     if(ret[0] = 'SUCESSO'){
         alert(`Venda realizada com sucesso || Ingressos restantes: ${quant-1}`)
@@ -165,17 +164,38 @@ function venderIngresso(event) {
     }
 }
 
-
-
 // Vendas
-function realizaVenda() {
-    document.querySelector('form').addEventListener('submit', event => {
-        event.preventDefault();
+function setaFormCaixa() {
+    const produtos = makeRequest({url: 'viewProdutos', params: {}})[0]
+    const produtosSelect = document.getElementById('produtos');
+    produtos.forEach(produto => {
+        const option = document.createElement('option');
+        option.value = produto.valor;
+        option.text = produto.nome_produto;
 
-    })
+        produtosSelect.add(option);
+    });
 }
 
+function vender(event) {
+    event.preventDefault();
+    const valor = document.querySelector("#produtos").value;
+    const qtd = document.querySelector("#quantidade").value;
 
+    const valorFinal = valor*qtd;
+
+    
+    const ret = makeRequest({url: 'realizaVenda', params: {
+        valorVenda: valorFinal,
+        idCaixa: 1,
+    }})
+    console.log(ret);
+    if(ret[0] = 'SUCESSO'){
+        console.log(ret)
+        alert(`Venda realizada !`)
+        document.location.reload(true);
+    }
+}
 
 
 // UTEIS
@@ -210,9 +230,3 @@ function makeRequest(req) {
         alert('Ocorreu um problema com a requisição, STATUS REQUISIÇÃO '+String.toString(httpRequest.status)); 
     }
 }
-
-// function removeFilme(id_filme) {
-//     const ret = makeRequest({url: 'filmes', params: {'rota': 'DELETE', 
-//                             id: id_filme}})    
-//     console.log(ret);
-// }
