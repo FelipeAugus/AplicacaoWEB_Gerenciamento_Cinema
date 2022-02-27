@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 
 const sessao = require("../Models/sessaoModel");
+const { SessaoSala } = require("../Models/viewSessaoModel");
 
 class SessaoController extends Controller{
     constructor(){
@@ -21,8 +22,19 @@ router.post("/criaSessao", (req, res) => {
     .catch(pool.exceptionQueryHandler(res));
 });
 
-router.post("/viewSessao", (req, res) => { 
-    pool.sequelize.query('SELECT * FROM trabalho_optativa2.sessoes_salas;')
+router.post("/viewSessoes", (req, res) => { 
+    const query = {}
+
+    if((req.body.id_sala).length) {query.id_sala = req.body.id_sala}
+    if((req.body.id_filme).length) {query.id_filme = req.body.id_filme}
+
+    SessaoSala.findAll({ where: query })
+    .then(pool.defaultQueryHandler(res))
+    .catch(pool.exceptionQueryHandler(res));
+});
+
+router.post("/viewSessoesGroup", (req, res) => { 
+    pool.sequelize.query('SELECT * FROM trabalho_optativa2.sessoes_salas_group;')
     .then(pool.defaultQueryHandler(res))
     .catch(pool.exceptionQueryHandler(res));
 });

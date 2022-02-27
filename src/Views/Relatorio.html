@@ -9,10 +9,7 @@
     <meta name="description" content="">
 
 
-    <title>Home</title>
-    <link rel="stylesheet" href="assets/web/assets/mobirise-icons2/mobirise2.css">
-    <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
-    <link rel="stylesheet" href="assets/web/assets/mobirise-icons-bold/mobirise-icons-bold.css">
+    <title>Ingressos</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
@@ -28,13 +25,12 @@
     </noscript>
     <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css">
     <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
-
-
-
-
+    
+    <script src="./scripts/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" ></script>
 </head>
 
-<body>
+<body onload="setaFormRelatorio()">
 
     <section data-bs-version="5.1" class="menu menu1 cid-sXsNsjFosU" once="menu" id="menu1-1f">
         <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
@@ -68,70 +64,63 @@
                                 href="Ingressos.html">Venda de Ingressos</a>
                         </li>
                     </ul>
-
-
                 </div>
             </div>
         </nav>
     </section>
 
-    <section data-bs-version="5.1" class="features1 cid-sW8HRbPoKp" id="features2-l">
+    <section data-bs-version="5.1" class="form5 cid-sXsEXkcVnS" id="form6-1d">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-6 col-lg-2">
-                    <div class="card-wrapper">
-                        <div class="card-box align-center">
-                            <a href="Caixa.html">
-                                <span class="mbr-iconfont mbri-cash"></span>
-                                <h4 class="card-title align-center mbr-black mbr-fonts-style display-7"><strong>VENDAS</strong></h4>
-                            </a>
+            <div class="mbr-section-head">
+                <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">Relatório: Sessões por filmes e salas</h3>
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
+                    <form class="mbr-form form-with-styler mx-auto">
+                        <div class="dragArea">
+                            <div class="border border-dark row col-lg-12 col-md-12 col-sm-12 form-group mb-3" id="filmes">
+                                <div> <h4>Filmes</h4> </div>
+                            </div>
+                            
+                            <div class="border border-dark row col-lg-12 col-md-12 col-sm-12 form-group mb-3" id="salas">
+                                <div> <h4>Salas</h4> </div>
+                            </div>
+                            <div class="row col-lg-12 col-md-12 col-sm-12 form-group mb-3" >
+                                <span class="float-right text-danger">*Sem filtros retornam todas as sessoes</span>
+                            </div>
+
+                            <div class="row">
+                                <button type="submit" class="btn btn-primary display-4 col" onclick="executaQuery(event)">Gerar relatório</button>
+                                <button type="submit" class="btn btn-danger display-4 col"  onclick="limpaFiltros(event)">Limpar filtros</button>
+                            </div>
+
                         </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-2">
-                    <div class="card-wrapper">
-                        <div class="card-box align-center">
-                            <a href="Ingressos.html">
-                                <span class="mbr-iconfont mbri-cash"></span>
-                                <h4 class="card-title align-center mbr-black mbr-fonts-style display-7"><strong>VENDA DE INGRESSOS</strong></h4>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-2">
-                    <div class="card-wrapper">
-                        <div class="card-box align-center">
-                            <a href="Sessao.html">
-                                <span class="mbr-iconfont mbri-video-play"></span>
-                                <h4 class="card-title align-center mbr-black mbr-fonts-style display-7"><strong>CADASTRO DE SESSÕES</strong></h4>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-2">
-                    <div class="card-wrapper">
-                        <div class="card-box align-center">
-                            <a href="Filme.html">
-                                <span class="mbr-iconfont mbri-video"></span>
-                                <h4 class="card-title align-center mbr-black mbr-fonts-style display-7"><strong>CADASTRO DE FILMES</strong></h4>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-2">
-                    <div class="card-wrapper">
-                        <div class="card-box align-center">
-                            <a href="Relatorio.html">
-                                <span class="mbr-iconfont mbri-print"></span>
-                                <h4 class="card-title align-center mbr-black mbr-fonts-style display-7"><strong>RELATÓRIO DAS SESSÕES</strong></h4>
-                            </a>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
 
+    <section class="container">
+        <div class="row mt-4">
+            <h3 class="col">Relatório:</h3>
+            <button type="submit" class="btn col" onclick="imprimiRelatorio()">IMPRIMIR</button>
+        </div>
+        <div id="tabela" >
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Sala</th>
+                        <th scope="col">Filme</th>
+                        <th scope="col">Tempo(Min)</th>
+                        <th scope="col">Fim da sessão</th>
+                    </tr>
+                </thead>
+                <tbody id="corpo-tabela">
+                </tbody>
+            </table>
+        </div>
+    </section>
 </body>
 
 </html>

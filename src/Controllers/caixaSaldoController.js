@@ -15,8 +15,8 @@ const caixasSaldoController = new CaixaSaldoController();
 
 router.post("/realizaVenda", (req, res) => {
     const params = req.body;
-    pool.sequelize.query('call trabalho_optativa2.realizaVenda(:valorVenda, :idCaixa);', 
-        {replacements: {valorVenda: params.valorVenda, idCaixa: params.idCaixa}})
+    pool.sequelize.query('call trabalho_optativa2.realizaVenda(:idProduto, :quantidade, :idCaixa);', 
+        {replacements: {idProduto: params.idProduto, quantidade: params.quantidade,idCaixa: params.idCaixa}})
     .then(pool.defaultQueryHandler(res))
     .catch(pool.exceptionQueryHandler(res));
 });

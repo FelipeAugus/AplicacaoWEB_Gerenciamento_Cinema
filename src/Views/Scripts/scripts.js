@@ -72,7 +72,7 @@ function setaFormSessao() {
 const mapSala = []
 const mapSalaFimSessao = []
 function carregaSessoes() {
-    const sessoes = makeRequest({url: 'viewSessao', params: {}})[0]
+    const sessoes = makeRequest({url: 'viewSessoesGroup', params: {}})[0]
 
     const table = document.getElementById('corpo-tabela');
     sessoes.forEach(sessao => {
@@ -86,7 +86,7 @@ function carregaSessoes() {
         filme.appendChild(document.createTextNode(sessao.nome_filme))
 
         const fimSessao = linha.insertCell();
-        fimSessao.appendChild(document.createTextNode(sessao.fim_da_ultima_sessao))
+        fimSessao.appendChild(document.createTextNode(sessao.fim_da_ultima_sessao.slice(0, -8)))
 
         
         mapSala.push(sessao.numero_sala)
@@ -117,6 +117,7 @@ function cadastraSessao(event) {
     if(ret[0] = 'SUCESSO'){
         console.log(ret)
         alert(`Inserido com sucesso || idSala:${sala} || idFilme: ${filme}|| dthrInicio: ${horario}`)
+        document.location.reload(true);
     }
 }
 
@@ -164,13 +165,13 @@ function venderIngresso(event) {
     }
 }
 
-// Vendas
+// VENDAS
 function setaFormCaixa() {
     const produtos = makeRequest({url: 'viewProdutos', params: {}})[0]
     const produtosSelect = document.getElementById('produtos');
     produtos.forEach(produto => {
         const option = document.createElement('option');
-        option.value = produto.valor;
+        option.value = produto.id_produto;
         option.text = produto.nome_produto;
 
         produtosSelect.add(option);
@@ -179,14 +180,12 @@ function setaFormCaixa() {
 
 function vender(event) {
     event.preventDefault();
-    const valor = document.querySelector("#produtos").value;
-    const qtd = document.querySelector("#quantidade").value;
-
-    const valorFinal = valor*qtd;
-
+    const idProduto = document.querySelector("#produtos").value;
+    const quantidade = document.querySelector("#quantidade").value;
     
     const ret = makeRequest({url: 'realizaVenda', params: {
-        valorVenda: valorFinal,
+        idProduto: idProduto,
+        quantidade: quantidade,
         idCaixa: 1,
     }})
     console.log(ret);
@@ -197,7 +196,99 @@ function vender(event) {
     }
 }
 
+// RELATORIO
+function setaFormRelatorio() {
+    const filmes = makeRequest({url: 'filmes', params: {'rota': 'SELECT'}})
+    const filmesDiv = document.getElementById('filmes');
+    filmes.forEach(filme => {
+        addCheckBox(filmesDiv, filme.nome, filme.id_filme);
+    });
+    
+    const salas = makeRequest({url: 'salas', params: {'rota': 'SELECT'}})
+    const salasDiv = document.getElementById('salas');
+    salas.forEach(sala => {
+        addCheckBox(salasDiv, sala.numero_sala, sala.id_sala);
+    });
 
+    function addCheckBox(divContainer, label, value) {
+        const divCheck = document.createElement('div');
+        divCheck.className = 'col-sm';
+        const className = divContainer.id;
+        divCheck.innerHTML = `<input type="checkbox" class="checkbox-${className.replace(" ", "_")}" name="${label}" value="${value}">
+                            <label for="${label}">${label}</label>`;
+        divContainer.appendChild(divCheck);
+    }
+}
+
+function limpaFiltros(event) {
+    event.preventDefault();
+
+    const salas = Array.from(document.getElementsByClassName("checkbox-salas"));
+    salas.forEach(sala => { sala.checked = false; })
+
+    const filmes = Array.from(document.getElementsByClassName("checkbox-filmes"));
+    filmes.forEach(filme => { filme.checked = false; } );
+}
+
+function executaQuery(event) {
+    event.preventDefault();
+
+    const salas = Array.from(document.getElementsByClassName("checkbox-salas"));
+    const salasCheck = [];
+    salas.forEach(sala => { if(sala.checked) { salasCheck.push(sala.value); }});
+
+    const filmes = Array.from(document.getElementsByClassName("checkbox-filmes"));
+    const filmesCheck = [];
+    filmes.forEach(filme => { if(filme.checked) { filmesCheck.push(filme.value); }});
+    
+    const sessoes = makeRequest({url: 'viewSessoes', params: {
+        id_sala: salasCheck,
+        id_filme: filmesCheck
+      }});
+
+    const table = document.getElementById('corpo-tabela');
+    table.innerHTML = "";
+    console.log(sessoes)
+    sessoes.forEach(sessao => {
+        console.log(sessao);
+        const linha = table.insertRow();
+
+        const numeroSala = linha.insertCell();
+        numeroSala.appendChild(document.createTextNode(sessao.numero_sala));
+
+        const nomeFilme = linha.insertCell();
+        nomeFilme.appendChild(document.createTextNode(sessao.nome_filme));
+
+        const tempoFilme = linha.insertCell();
+        tempoFilme.appendChild(document.createTextNode(sessao.tempo_minutos_filme));
+
+        const fimSessao = linha.insertCell();
+        fimSessao.appendChild(document.createTextNode(sessao.fim_da_sessao.slice(0, -8).replace("T", " ")));
+    });
+
+    table.classList.add("mb-5")
+}
+
+function imprimiRelatorio() {
+    const minhaTabela = document.getElementById('tabela');
+
+    var pdf = new jsPDF('p', 'px');   
+    pdf.setFont("helvetica");
+    pdf.setFontType("bold");
+    pdf.setFontSize(16);
+    pdf.text(200, 25, "RELATÓRIO");
+    const margins = {
+        top: 80,
+        bottom: 60,
+        left: 40,
+        width: 522
+    };
+
+    pdf.fromHTML(
+        minhaTabela, margins.left,margins.top, {'width': margins.width}, 
+        function (dispose) { pdf.save('RelatorioSessoes.pdf'); }, margins);
+
+}
 // UTEIS
 function makeRequest(req) {
     const url = req.url;
