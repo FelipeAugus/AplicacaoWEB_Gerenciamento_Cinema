@@ -86,7 +86,7 @@ function carregaSessoes() {
         filme.appendChild(document.createTextNode(sessao.nome_filme))
 
         const fimSessao = linha.insertCell();
-        fimSessao.appendChild(document.createTextNode(sessao.fim_da_ultima_sessao.slice(0, -8)))
+        fimSessao.appendChild(document.createTextNode(sessao.fim_da_ultima_sessao.slice(0, -8).replace('T', ' ')))
 
         
         mapSala.push(sessao.numero_sala)
