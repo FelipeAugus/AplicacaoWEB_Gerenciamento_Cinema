@@ -182,7 +182,10 @@ function vender(event) {
     event.preventDefault();
     const idProduto = document.querySelector("#produtos").value;
     const quantidade = document.querySelector("#quantidade").value;
-    
+    if(idProduto=='0' || !quantidade){
+        alert("Preencha todos campos");
+        return
+    }
     const ret = makeRequest({url: 'realizaVenda', params: {
         idProduto: idProduto,
         quantidade: quantidade,
